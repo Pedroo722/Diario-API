@@ -1,6 +1,6 @@
 # Diário API
 
-Projeto back-end simples criado para a disciplina de **Desenvolvimento de Aplicações Web III**. A aplicação foi construída utilizando **Spring Boot** e o **TBD** como banco de dados, visando criar uma api para a consulta e manipulações de informações de um [projeto de um sistema de registro de atividades do dia a dia.](https://github.com/Pedroo722/Diario-DAW3).
+Projeto back-end simples criado para a disciplina de **Desenvolvimento de Aplicações Web III**. A aplicação foi construída utilizando **Java** e **Spring Boot**, com o **PostgreSQL** como banco de dados, visando criar uma api para a consulta e manipulações de informações de um [projeto de um sistema de registro de atividades do dia a dia.](https://github.com/Pedroo722/Diario-DAW3).
 
 Membros do Projeto:
 - Pedro Henrique Alexandre
@@ -15,8 +15,7 @@ Membros do Projeto:
 ![Java 17](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Spring Boot 3](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
 ![Maven](https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apache-maven&logoColor=white)
-<!-- ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white) -->
-<!-- ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white) -->
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white) 
 
 </div>
 
@@ -41,7 +40,7 @@ Membros do Projeto:
 
 - **Java 17** ou superior
 - **Maven** 3.8.1+
-- **MongoDB**
+- **PostgreSQL**
 
 ### Passos para execução
 
@@ -92,4 +91,4 @@ A API fornece os seguintes endpoints para a manipulação de dados da coleção 
 ### Postagem
 
 ```json
-``` -->
+``` 
