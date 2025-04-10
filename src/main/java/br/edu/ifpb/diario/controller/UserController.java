@@ -3,6 +3,7 @@ package br.edu.ifpb.diario.controller;
 import java.util.List;
 import java.util.Optional;
 
+import br.edu.ifpb.diario.dto.RegisterUserRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class UserController {
 
     @GetMapping("/list")
     public ResponseEntity<?> getAllUsers(
-        @RequestParam(value = "email", required = false) String email) {
+            @RequestParam(value = "email", required = false) String email) {
         try {
             List<User> users;
 
@@ -54,21 +55,15 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> saveUser(@RequestBody User user) {
+    public ResponseEntity<User> saveUser(@RequestBody RegisterUserRequestDTO user) {
         User savedUser = userService.saveUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
-        Optional<User> existingUser = userService.getUserById(id);
-        if (existingUser.isPresent()) {
-            user.setId(id);
-            User updatedUser = userService.saveUser(user);
-            return ResponseEntity.ok(updatedUser);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody RegisterUserRequestDTO user) {
+        User editedUser = userService.updateUser(id, user);
+        return ResponseEntity.status(HttpStatus.OK).body(editedUser);
     }
 
     @DeleteMapping("/{id}")

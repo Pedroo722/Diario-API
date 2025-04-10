@@ -14,9 +14,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "blog_post")
+@Getter
+@Setter
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Post {
     @Id
@@ -39,18 +43,4 @@ public class Post {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user"))
     private User user;
-
-    public Long getId() { return id; }
-    public String getTitle() { return title; }
-    public String getImage() { return image; }
-    public String getBody() { return body; }
-    public LocalDate getCreatedAt() { return createdAt; }
-    public User getUser() { return user; }
-
-    public void setId(Long id) { this.id = id; }
-    public void setTitle(String title) { this.title = title; }
-    public void setImage(String image) { this.image = image; }
-    public void setBody(String body) { this.body = body; }
-    public void setCreatedAt(LocalDate createdAt) { this.createdAt = createdAt; }
-    public void setUser(User user) { this.user = user; }
 }
