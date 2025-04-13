@@ -27,21 +27,9 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/list")
-    public ResponseEntity<?> getAllUsers(
-            @RequestParam(value = "email", required = false) String email) {
-        try {
-            List<User> users;
-
-            if (email != null) {
-                users = List.of(userService.findUserByEmail(email));
-            } else {
-                users = userService.getAllUsers();
-            }
-
-            return ResponseEntity.ok(users);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao buscar usuários.");
-        }
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
     }
 
     @GetMapping("/{id}")
@@ -52,12 +40,6 @@ public class UserController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-    }
-
-    @PostMapping
-    public ResponseEntity<User> saveUser(@RequestBody RegisterUserRequestDTO user) {
-        User savedUser = userService.saveUser(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
 
     @PutMapping("/{id}")

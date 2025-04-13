@@ -47,18 +47,19 @@ public class UserService implements UserDetailsService {
 
     public User updateUser(Long id, RegisterUserRequestDTO user) {
         Optional<User> userToEdit = userRepository.findById(id);
-        if (userToEdit.isPresent()) {
-            userToEdit.get().setId(id);
-            userToEdit.get().setName(user.name());
-            userToEdit.get().setEmail(user.email());
-            userToEdit.get().setPassword(passwordEncoder.encode(user.password()));
-            userToEdit.get().setRole(Role.USER);
 
-            userRepository.save(userToEdit.get());
-            return userToEdit.get();
-        } else {
+        if (userToEdit.isEmpty()) {
             throw new UserNotFoundException();
         }
+
+        userToEdit.get().setId(id);
+        userToEdit.get().setName(user.name());
+        userToEdit.get().setEmail(user.email());
+        userToEdit.get().setPassword(passwordEncoder.encode(user.password()));
+        userToEdit.get().setRole(Role.USER);
+        userRepository.save(userToEdit.get());
+
+        return userToEdit.get();
     }
 
     public void deleteUser(Long id) {
@@ -66,14 +67,22 @@ public class UserService implements UserDetailsService {
     }
 
     public User findUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+        Optional<User> user = userRepository.findByEmail(email);
+
+        if (user.isEmpty()) {
+            throw new UserNotFoundException();
+        }
+
+        return user.get();
     }
 
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
+        Optional<User> user = userRepository.findByEmail(email);
+
+        if (user.isEmpty()) {
             throw new UsernameNotFoundException("Usuário com email " + email + " não encontrado.");
         }
-        return user;
+
+        return user.get();
     }
 }

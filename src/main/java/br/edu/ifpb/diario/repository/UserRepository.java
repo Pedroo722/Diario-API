@@ -5,7 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import br.edu.ifpb.diario.model.User;
 
+import java.util.Optional;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    public User findByEmail(String email);
+    Optional<User> findByEmail(String email);
 }

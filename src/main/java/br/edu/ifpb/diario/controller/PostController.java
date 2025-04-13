@@ -1,10 +1,12 @@
 package br.edu.ifpb.diario.controller;
 
+import br.edu.ifpb.diario.dto.PostRequestDTO;
 import br.edu.ifpb.diario.model.Post;
 import br.edu.ifpb.diario.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,29 +36,24 @@ public class PostController {
     @GetMapping("/{id}")
     public ResponseEntity<Post> getPostById(@PathVariable Long id) {
         Optional<Post> post = postService.getPostById(id);
+
         if (post.isPresent()) {
             return ResponseEntity.ok(post.get());
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @PostMapping
-    public ResponseEntity<Post> savePost(@RequestBody Post post) {
+    public ResponseEntity<Post> savePost(@RequestBody PostRequestDTO post) {
         Post savedPost = postService.savePost(post);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedPost);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Post> updatePost(@PathVariable Long id, @RequestBody Post post) {
-        Optional<Post> existingPost = postService.getPostById(id);
-        if (existingPost.isPresent()) {
-            post.setId(id);
-            Post updatedPost = postService.savePost(post);
-            return ResponseEntity.ok(updatedPost);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+    public ResponseEntity<Post> updatePost(@PathVariable Long id, @RequestBody PostRequestDTO post) {
+        Post updatedPost = postService.updatePost(id, post);
+        return ResponseEntity.ok(updatedPost);
     }
 
     @DeleteMapping("/{id}")
