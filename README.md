@@ -33,7 +33,7 @@ Membros do Projeto:
 - **Model**: Representa as entidades do banco de dados e seus atributos.
 - **Repository**: Arquivos que fazem a conexão com o banco de dados.
 - **Service**: Contêm a lógica de negócio para manipular e consultar os dados.
-- **Util**: Contêm arquivos com metodos de validação dos dados das entidades da clínica.
+- **Util**: Contêm arquivos com metodos de validação dos dados das entidades da aplicação.
 
 ## Como Executar
 ### Pré-requisitos
