@@ -2,14 +2,14 @@ package br.edu.ifpb.diario.security;
 
 import java.io.IOException;
 
-import br.edu.ifpb.diario.model.User;
-import br.edu.ifpb.diario.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import br.edu.ifpb.diario.model.User;
+import br.edu.ifpb.diario.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,10 +1,5 @@
 package br.edu.ifpb.diario.controller;
 
-import br.edu.ifpb.diario.dto.*;
-import br.edu.ifpb.diario.security.PasswordEncoderConfig;
-import br.edu.ifpb.diario.service.UserService;
-import br.edu.ifpb.diario.security.JWTUtils;
-import br.edu.ifpb.diario.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +8,18 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import br.edu.ifpb.diario.dto.LoginDTO;
+import br.edu.ifpb.diario.dto.LoginResponseDTO;
+import br.edu.ifpb.diario.dto.RegisterUserRequestDTO;
+import br.edu.ifpb.diario.model.User;
+import br.edu.ifpb.diario.security.JWTUtils;
+import br.edu.ifpb.diario.security.PasswordEncoderConfig;
+import br.edu.ifpb.diario.service.UserService;
 
 @RestController
 @RequestMapping("/auth")
