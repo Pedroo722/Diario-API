@@ -51,7 +51,8 @@ public class PostService {
             throw new PostNotFoundException();
         }
 
-        String userEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String userEmail = loggedUser.getEmail();
         User postUser = existingPost.get().getUser();
 
         if(!postUser.getEmail().equals(userEmail)) {
@@ -59,9 +60,11 @@ public class PostService {
         }
 
         Post newPost = new Post();
+        newPost.setId(existingPost.get().getId());
         newPost.setTitle(post.title());
         newPost.setImage(post.image());
         newPost.setBody(post.body());
+        newPost.setCreatedAt(existingPost.get().getCreatedAt());
 
         User user = userService.findUserByEmail(userEmail);
         newPost.setUser(user);
@@ -76,7 +79,8 @@ public class PostService {
             throw new PostNotFoundException();
         }
 
-        String userEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String userEmail = loggedUser.getEmail();
         User postUser = existingPost.get().getUser();
 
         if(!postUser.getEmail().equals(userEmail)) {

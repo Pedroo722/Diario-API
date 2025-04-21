@@ -45,7 +45,7 @@ public class WebSecurityConfig {
     @Bean
     AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userService); // return user
+        provider.setUserDetailsService(userService);
         provider.setPasswordEncoder(passwordEncoder);
         return new ProviderManager(provider);
     }

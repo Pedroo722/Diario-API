@@ -11,6 +11,7 @@ import br.edu.ifpb.diario.exceptions.PostNotFoundException;
 import br.edu.ifpb.diario.exceptions.UnauthorizedAccessException;
 import br.edu.ifpb.diario.exceptions.UserAlreadyRegisteredException;
 import br.edu.ifpb.diario.exceptions.UserNotFoundException;
+import org.springframework.web.client.HttpClientErrorException;
 
 @ControllerAdvice
 public class ExceptionsHandler {
@@ -38,7 +39,10 @@ public class ExceptionsHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 
-    @ExceptionHandler(UnauthorizedAccessException.class)
+    @ExceptionHandler({
+            UnauthorizedAccessException.class,
+            HttpClientErrorException.Forbidden.class
+    })
     public ResponseEntity<String> handleUnauthorizedAccess(UnauthorizedAccessException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
     }

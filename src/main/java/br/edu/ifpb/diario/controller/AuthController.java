@@ -57,9 +57,9 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<User> createDriver(@RequestBody RegisterUserRequestDTO request) {
-        User reponse = userService.saveUser(request);
+    public ResponseEntity<User> register(@RequestBody RegisterUserRequestDTO request) {
+        User response = userService.saveUser(request);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(reponse);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }
