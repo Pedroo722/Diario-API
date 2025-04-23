@@ -35,13 +35,13 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    @PutMapping("/{email}")
+    @PutMapping("/update/{email}")
     public ResponseEntity<UserResponseDTO> updateUser(@PathVariable String email, @RequestBody UserRequestDTO user) {
         UserResponseDTO editedUser = userService.updateUser(email, user);
         return ResponseEntity.status(HttpStatus.OK).body(editedUser);
     }
 
-    @DeleteMapping("/{email}")
+    @DeleteMapping("/delete/{email}")
     public ResponseEntity<Void> deleteUser(@PathVariable String email) {
         userService.deleteUser(email);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

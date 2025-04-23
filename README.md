@@ -47,7 +47,7 @@ Membros do Projeto:
 1. Clone o repositório:
    ```bash
    git clone https://github.com/Pedroo722/Diario-API.git
-   cd seu-repositorio
+   cd Diario-API/
    ```
 
 2. Compile o projeto:
@@ -75,11 +75,11 @@ A API fornece os seguintes endpoints para a manipulação de dados da coleção 
 - **DELETE** `/api/users/delete/{id}`: Remove um usuário pelo ID.
 
 ### Usuário
-- **GET** `/api/blog_posts/list`: Recupera todos as postagens.
-- **GET** `/api/blog_posts/list/{id}`: Recupera um postagem pelo ID.
-- **POST** `/api/blog_posts/create`: Cria um novo postagem.
-- **PUT** `/api/blog_posts/update/{id}`: Atualiza um postagem existente.
-- **DELETE** `/api/blog_posts/delete/{id}`: Remove um postagem pelo ID.
+- **GET** `/api/posts/list`: Recupera todos as postagens.
+- **GET** `/api/posts/list/{id}`: Recupera um postagem pelo ID.
+- **POST** `/api/posts/create`: Cria um novo postagem.
+- **PUT** `/api/posts/update/{id}`: Atualiza um postagem existente.
+- **DELETE** `/api/posts/delete/{id}`: Remove um postagem pelo ID.
 
 <!-- 
 ## Estrutura dos Dados

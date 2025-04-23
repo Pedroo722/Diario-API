@@ -52,19 +52,19 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Post> savePost(@RequestBody PostRequestDTO post) {
         Post savedPost = postService.savePost(post);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedPost);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Post> updatePost(@PathVariable Long id, @RequestBody PostRequestDTO post) {
         Post updatedPost = postService.updatePost(id, post);
         return ResponseEntity.ok(updatedPost);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deletePost(@PathVariable Long id) {
         Optional<Post> existingPost = postService.getPostById(id);
         if (existingPost.isPresent()) {
