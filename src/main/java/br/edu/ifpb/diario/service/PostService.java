@@ -1,19 +1,24 @@
 package br.edu.ifpb.diario.service;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import br.edu.ifpb.diario.dto.PostRequestDTO;
 import br.edu.ifpb.diario.exceptions.PostNotFoundException;
 import br.edu.ifpb.diario.exceptions.UnauthorizedAccessException;
 import br.edu.ifpb.diario.model.User;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import br.edu.ifpb.diario.model.Post;
 import br.edu.ifpb.diario.repository.PostRepository;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class PostService {
@@ -23,6 +28,9 @@ public class PostService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private Cloudinary cloudinary;
+
     public List<Post> getAllPosts() {
         return postRepository.findAll();
     }
@@ -31,11 +39,13 @@ public class PostService {
         return postRepository.findById(id);
     }
 
-    public Post savePost(PostRequestDTO post) {
+    public Post savePost(String title, String body, MultipartFile image) {
+        String imagePath = saveImage(image);
+
         Post newPost = new Post();
-        newPost.setTitle(post.title());
-        newPost.setImage(post.image());
-        newPost.setBody(post.body());
+        newPost.setTitle(title);
+        newPost.setImage(imagePath);
+        newPost.setBody(body);
         newPost.setCreatedAt(LocalDate.now());
 
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -44,7 +54,7 @@ public class PostService {
         return postRepository.save(newPost);
     }
 
-    public Post updatePost(Long id, PostRequestDTO post) {
+    public Post updatePost(Long id, String title, String body, MultipartFile image) {
         Optional<Post> existingPost = getPostById(id);
 
         if(existingPost.isEmpty()) {
@@ -59,17 +69,28 @@ public class PostService {
             throw new UnauthorizedAccessException();
         }
 
+        String imagePath = saveImage(image);
+
         Post newPost = new Post();
         newPost.setId(existingPost.get().getId());
-        newPost.setTitle(post.title());
-        newPost.setImage(post.image());
-        newPost.setBody(post.body());
+        newPost.setTitle(title);
+        newPost.setImage(imagePath);
+        newPost.setBody(body);
         newPost.setCreatedAt(existingPost.get().getCreatedAt());
 
         User user = userService.findUserByEmail(userEmail);
         newPost.setUser(user);
 
         return postRepository.save(newPost);
+    }
+
+    private String saveImage(MultipartFile image) {
+        try {
+            Map uploadResult = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.asMap("resource_type", "auto"));
+            return (String) uploadResult.get("secure_url");
+        } catch (IOException e) {
+            throw new RuntimeException("Erro ao fazer upload da imagem para o Cloudinary", e);
+        }
     }
 
     public void deletePost(Long id) {
