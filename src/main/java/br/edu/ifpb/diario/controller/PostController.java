@@ -1,9 +1,9 @@
 package br.edu.ifpb.diario.controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,15 +19,14 @@ public class PostController {
     private PostService postService;
 
     @GetMapping("/list")
-    public ResponseEntity<List<Post>> getAllPosts(
-            @RequestParam(value = "userId", required = false) Long userId) {
-
-        List<Post> posts;
-
+    public ResponseEntity<Page<Post>> getAllPosts(@RequestParam(value = "userId", required = false) Long userId,
+                                                  @RequestParam(defaultValue = "0") int page,
+                                                  @RequestParam(defaultValue = "10") int size) {
+        Page<Post> posts;
         if (userId != null) {
-            posts = postService.findPostByUser(userId);
+            posts = postService.findPostByUser(userId, page, size);
         } else {
-            posts = postService.getAllPosts();
+            posts = postService.getAllPosts(page, size);
         }
 
         return ResponseEntity.ok(posts);

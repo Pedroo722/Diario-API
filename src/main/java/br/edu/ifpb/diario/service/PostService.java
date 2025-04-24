@@ -6,13 +6,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import br.edu.ifpb.diario.dto.PostRequestDTO;
 import br.edu.ifpb.diario.exceptions.PostNotFoundException;
 import br.edu.ifpb.diario.exceptions.UnauthorizedAccessException;
 import br.edu.ifpb.diario.model.User;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -31,8 +32,8 @@ public class PostService {
     @Autowired
     private Cloudinary cloudinary;
 
-    public List<Post> getAllPosts() {
-        return postRepository.findAll();
+    public Page<Post> getAllPosts(int page, int size) {
+        return postRepository.findAll(PageRequest.of(page, size));
     }
 
     public Optional<Post> getPostById(Long id) {
@@ -111,7 +112,7 @@ public class PostService {
         postRepository.deleteById(id);
     }
 
-    public List<Post> findPostByUser(Long userId) {
-        return postRepository.findByUserId(userId);
+    public Page<Post> findPostByUser(Long userId, int page, int size) {
+        return postRepository.findByUserId(userId, PageRequest.of(page, size));
     }
 }
